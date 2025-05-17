@@ -1,0 +1,21 @@
+services:
+  machineLearningLab:
+    container_name: SpotifAI-Rank
+    shm_size: "8gb"
+    image:  rapidsai/rapidsai:cuda11.8-runtime-ubuntu22.04-py3.10
+    working_dir: /SpotifAI-Rank
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    ports:
+      - "8888:8888"
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+      - ENV=development
+    volumes:
+      - ./src:/SpotifAI-Rank/

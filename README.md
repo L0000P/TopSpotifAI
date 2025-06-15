@@ -15,6 +15,12 @@ The dataset used for training and evaluation is available on Kaggle:
 
 The entire project is containerized for easy setup and reproducibility.
 
+***NOTE***: Modify **shm_size** parameter in **docker-compose.yml** files for your GPU memory support, in this case 8GB: 
+
+```yaml
+shm_size: "8gb"
+```
+
 ### Dev Build
 
 ```console

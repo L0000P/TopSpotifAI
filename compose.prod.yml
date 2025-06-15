@@ -1,9 +1,12 @@
 services:
   TopSpotifAI:
-    container_name: TopSpotifAI_dev
-    restart: unless-stopped
+    container_name: TopSpotifAI_prod
+    build:
+      context: ./src
+      dockerfile: ./Dockerfile
     shm_size: "8gb"
-    image: rapidsai/rapidsai:cuda11.8-runtime-ubuntu22.04-py3.10
+    image:  rapidsai/rapidsai:cuda11.8-runtime-ubuntu22.04-py3.10
+    restart: unless-stopped
     working_dir: /TopSpotifAI
     deploy:
       resources:
@@ -17,6 +20,6 @@ services:
     environment:
       - NVIDIA_VISIBLE_DEVICES=all
       - NVIDIA_DRIVER_CAPABILITIES=compute,utility
-      - ENV=development
+      - ENV=production
     volumes:
       - ./src:/TopSpotifAI/

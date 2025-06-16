@@ -11,6 +11,13 @@ The dataset used for training and evaluation is available on Kaggle:
 
 🔗 [Spotify Top 50 Playlist Songs](https://www.kaggle.com/datasets/anxods/spotify-top-50-playlist-songs-anxods)
 
+Ensure the dataset is placed in the following directory structure:
+```bash
+TopSpotifAI/
+└── src/
+  └── data/
+    └── *.csv
+```
 ## Docker
 
 The entire project is containerized for easy setup and reproducibility.

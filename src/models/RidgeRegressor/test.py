@@ -1,17 +1,18 @@
 import os
 import glob
 import json
+import gc
+import joblib
 import numpy as np
 import pandas as pd
 from tqdm import tqdm
-from sklearn.preprocessing import LabelEncoder, OneHotEncoder, StandardScaler, MinMaxScaler
 from sklearn.linear_model import Ridge
 from sklearn.model_selection import GridSearchCV, TimeSeriesSplit
 from sklearn.metrics import mean_absolute_error, mean_squared_error
-from torch.utils.tensorboard import SummaryWriter
 from scipy.stats import spearmanr, kendalltau
-import gc
-import joblib
+from sklearn.preprocessing import (LabelEncoder, OneHotEncoder, 
+                                   StandardScaler, MinMaxScaler)
+from torch.utils.tensorboard import SummaryWriter
 
 def extract_country_name(filename):
     """Extract clean country name from filename"""
@@ -716,13 +717,13 @@ class RidgeMultiTargetRegressor:
             print("="*60)
             print(f"Position model saved to: {self.position_output_dir}")
             print(f"Popularity model saved to: {self.popularity_output_dir}")
-            print(f"Best alpha for position: {self.position_best_alpha}")
-            print(f"Best alpha for popularity: {self.popularity_best_alpha}")
+            print(f"Best alpha for position: {position_best_alpha}")
+            print(f"Best alpha for popularity: {popularity_best_alpha}")
             print("Run 'tensorboard --logdir=runs/RidgeRegressor' to view the logs")
             
             return {
-                'position_model': self.position_model,
-                'popularity_model': self.popularity_model,
+                'position_model': position_model,
+                'popularity_model': popularity_model,
                 'position_metrics': position_overall_metrics,
                 'popularity_metrics': popularity_overall_metrics,
                 'position_country_metrics': position_country_metrics,
@@ -732,7 +733,7 @@ class RidgeMultiTargetRegressor:
         except Exception as e:
             print(f"Error during training: {e}")
             raise
-        
+                
 def main():
     # Initialize the multi-target regressor
     regressor = RidgeMultiTargetRegressor()
